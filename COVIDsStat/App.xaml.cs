@@ -6,15 +6,19 @@ namespace COVIDsStat
 {
     public partial class App : Application
     {
+        AppBootstrapper bootstrapper;
         public App()
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+           
         }
 
         protected override void OnStart()
         {
+            bootstrapper = new AppBootstrapper();
+
+            MainPage = bootstrapper.CreateMainPage();
         }
 
         protected override void OnSleep()
