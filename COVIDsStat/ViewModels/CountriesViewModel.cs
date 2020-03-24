@@ -12,7 +12,7 @@ namespace COVIDsStat.ViewModels
         private readonly IApiService _apiService;
 
         [Reactive]
-        public ObservableCollection<COVID> Countries { get; set; } 
+        public ObservableCollection<CountryStat> Countries { get; set; } 
 
         public CountriesViewModel(IApiService apiService)
         {
@@ -29,7 +29,7 @@ namespace COVIDsStat.ViewModels
 
             var _data = await _apiService.COVIDApi.GetCountriesStatisticsAsync();
 
-            Countries = new ObservableCollection<COVID>(_data.OrderBy(x=>x.Country));
+            Countries = new ObservableCollection<CountryStat>(_data.OrderBy(x=>x.Country));
 
             IsBusy = false;
 

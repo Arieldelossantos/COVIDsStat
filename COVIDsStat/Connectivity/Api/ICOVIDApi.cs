@@ -12,6 +12,6 @@ namespace COVIDsStat.Connectivity.Api
     {
         //The GET param is empty because we are using a temporary API Url dirict to the json file.
         [Get("/covid?fbclid=IwAR10zGzI9LthniBRe9ooCNLjDRgbnZaVsERSn93cJTBcCZRKgYPqqh8shLU")]
-        Task<IEnumerable<COVID>> GetCountriesStatisticsAsync();
+        Task<IEnumerable<CountryStat>> GetCountriesStatisticsAsync();
     }
 }

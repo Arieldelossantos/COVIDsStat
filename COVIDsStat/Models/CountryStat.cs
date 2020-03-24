@@ -1,7 +1,7 @@
 ﻿using System;
 namespace COVIDsStat.Models
 {
-    public class COVID
+    public class CountryStat
     {
         public string Country { get; set; }
         public string TotalCases { get; set; }
