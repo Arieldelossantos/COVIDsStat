@@ -27,7 +27,8 @@ namespace COVIDsStat
            
             // Views and ViewModels
             Locator.CurrentMutable.Register(() => new CountriesPage(), typeof(IViewFor<CountriesViewModel>));
-           
+            Locator.CurrentMutable.Register(() => new CountryPage(), typeof(IViewFor<CountryViewModel>));
+
         }
 
         public Page CreateMainPage()

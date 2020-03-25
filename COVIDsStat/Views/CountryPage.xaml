@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<rxui:ReactiveContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+                          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                          x:Class="COVIDsStat.Views.CountryPage"
+                          x:TypeArguments="vm:CountryViewModel"
+                          xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
+                          xmlns:vm="clr-namespace:COVIDsStat.ViewModels"
+                          xmlns:cs="clr-namespace:COVIDsStat.Controls"
+                          Visual="Material"
+                          x:Name="countrypage">
+    <ScrollView>
+        <StackLayout Spacing="15" Padding="5,15,5,0" >
+            <Label HorizontalTextAlignment="Center" Margin="10"  FontSize="45"
+                   FontAttributes="Bold" TextColor="#3d3d3d"
+                   Text="{Binding Country.Country}"/>
+            <Grid Padding="20" ColumnSpacing="15" RowSpacing="15">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <cs:CountryStatCard TitleStatName="Total Cases" StatValue="{Binding Country.TotalCases}"
+                                    Grid.Row="0" Grid.Column="0" />
+                <cs:CountryStatCard TitleStatName="New Cases" StatValue="{Binding Country.NewCases}"
+                                    Grid.Row="0" Grid.Column="1" />
+
+                <cs:CountryStatCard TitleStatName="Total Deaths" StatValue="{Binding Country.TotalDeaths}"
+                                    Grid.Row="1" Grid.Column="0"/>
+                <cs:CountryStatCard TitleStatName="New Deaths" StatValue="{Binding Country.NewDeaths}"
+                                    Grid.Row="1" Grid.Column="1" />
+
+                <cs:CountryStatCard TitleStatName="Total Recovered" StatValue="{Binding Country.TotalRecovered}"
+                                    Grid.Row="2" Grid.Column="0"/>
+                <cs:CountryStatCard TitleStatName="Active Cases" StatValue="{Binding Country.ActiveCases}"
+                                    Grid.Row="2" Grid.Column="1" />
+
+                <cs:CountryStatCard TitleStatName="Serious Critical" StatValue="{Binding Country.SeriousCritical}"
+                                    Grid.Row="3" Grid.Column="0"/>
+                <cs:CountryStatCard TitleStatName="Total Cases x1Mpop" StatValue="{Binding Country.TotCasesx1Mpop}"
+                                    Grid.Row="3" Grid.Column="1" />
+            </Grid>
+        </StackLayout>
+    </ScrollView>
+</rxui:ReactiveContentPage>

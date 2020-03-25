@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             x:Class="COVIDsStat.Controls.CountryStatCard">
+
+   <pv:PancakeView CornerRadius="10" HasShadow="True"
+                   Padding="10" Elevation="3"
+                   BackgroundGradientStartColor="#919191" BackgroundGradientEndColor="#424242"
+                   BackgroundGradientAngle="60">
+       <StackLayout Spacing="15">
+           <Label x:Name="title" TextColor="#f2f2f2"
+                  FontSize="Title" FontAttributes="Bold"
+                  HorizontalTextAlignment="Center"/>
+           <Label x:Name="info" TextColor="White"
+                  FontSize="Title" 
+                  HorizontalTextAlignment="Center"/>
+       </StackLayout>
+   </pv:PancakeView>
+
+</ContentView>
