@@ -14,7 +14,24 @@
             <DataTemplate>
                 <ViewCell>
                     <Grid Padding="15,5">
-                        <Label Text="{Binding Country}" TextColor="#363636" FontSize="Title"/>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.ColumnSpan="2" Text="{Binding Country}"
+                               TextColor="#363636" FontSize="Title"/>
+
+                        <Label Grid.Row="1" Grid.Column="0"
+                               VerticalOptions="CenterAndExpand"
+                               Text="Total Cases: " TextColor="DarkGray"
+                               FontAttributes="Bold" FontSize="Large"/>
+                        <Label Grid.Row="1" Grid.Column="1"
+                               VerticalOptions="CenterAndExpand" TextColor="Gray"
+                               Text="{Binding TotalCases}" FontSize="Large"/>
                     </Grid>
                 </ViewCell>
             </DataTemplate>
