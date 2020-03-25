@@ -34,7 +34,12 @@ namespace COVIDsStat.Views
                     this.OneWayBind(this.ViewModel,
                                     vm => vm.Countries,
                                     v => v.countriesList.ItemsSource)
-                    .DisposeWith(disposables); ;
+                    .DisposeWith(disposables);
+
+                    this.Bind(this.ViewModel,
+                                    vm => vm.SelectedCountry,
+                                    v => v.countriesList.SelectedItem)
+                    .DisposeWith(disposables);
 
                 });
         }

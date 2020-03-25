@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reactive.Linq;
 using COVIDsStat.Connectivity.Api;
 using COVIDsStat.Models;
+using ReactiveUI;
 using ReactiveUI.Fody.Helpers;
 
 namespace COVIDsStat.ViewModels
@@ -12,14 +14,27 @@ namespace COVIDsStat.ViewModels
         private readonly IApiService _apiService;
 
         [Reactive]
+        public CountryStat SelectedCountry { get; set; }
+
+        [Reactive]
         public ObservableCollection<CountryStat> Countries { get; set; } 
 
         public CountriesViewModel(IApiService apiService)
         {
             _apiService = apiService;
 
+            RegisterEvents();
             LoadData();
         }
+
+        private void RegisterEvents()
+        {
+            this.WhenAnyValue(x => x.SelectedCountry)
+                .Where(x => x != null)
+                .Subscribe(NavigateToCountryPage);
+        }
+
+        private void NavigateToCountryPage(CountryStat country) => NavigateToPage(new CountryViewModel(SelectedCountry));
 
         private async void LoadData()
         {

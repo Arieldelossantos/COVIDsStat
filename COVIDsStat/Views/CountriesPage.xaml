@@ -5,8 +5,8 @@
                           x:TypeArguments="vm:CountriesViewModel"
                           xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
                           xmlns:vm="clr-namespace:COVIDsStat.ViewModels"
+                          Visual="Material"
                           x:Name="countriespage">
-   
     <ListView x:Name="countriesList"
               ItemSelected="Handle_ItemSelected"
               HasUnevenRows="True">
