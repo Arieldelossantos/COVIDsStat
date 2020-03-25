@@ -10,7 +10,7 @@
                    BackgroundGradientAngle="60">
        <StackLayout Spacing="15">
            <Label x:Name="title" TextColor="#f2f2f2"
-                  FontSize="Title" FontAttributes="Bold"
+                  FontSize="Subtitle" FontAttributes="Bold"
                   HorizontalTextAlignment="Center"/>
            <Label x:Name="info" TextColor="White"
                   FontSize="Title" 

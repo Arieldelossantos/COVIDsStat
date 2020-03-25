@@ -36,15 +36,16 @@
                 <cs:CountryStatCard TitleStatName="New Deaths" StatValue="{Binding Country.NewDeaths}"
                                     Grid.Row="1" Grid.Column="1" />
 
-                <cs:CountryStatCard TitleStatName="Total Recovered" StatValue="{Binding Country.TotalRecovered}"
+                <cs:CountryStatCard TitleStatName="Recovered" StatValue="{Binding Country.TotalRecovered}"
                                     Grid.Row="2" Grid.Column="0"/>
                 <cs:CountryStatCard TitleStatName="Active Cases" StatValue="{Binding Country.ActiveCases}"
                                     Grid.Row="2" Grid.Column="1" />
 
-                <cs:CountryStatCard TitleStatName="Serious Critical" StatValue="{Binding Country.SeriousCritical}"
-                                    Grid.Row="3" Grid.Column="0"/>
-                <cs:CountryStatCard TitleStatName="Total Cases x1Mpop" StatValue="{Binding Country.TotCasesx1Mpop}"
-                                    Grid.Row="3" Grid.Column="1" />
+                <cs:CountryStatCard TitleStatName="Serious Critical"
+                                    HorizontalOptions="CenterAndExpand"
+                                    StatValue="{Binding Country.SeriousCritical}"
+                                    Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"/>
+                
             </Grid>
         </StackLayout>
     </ScrollView>
