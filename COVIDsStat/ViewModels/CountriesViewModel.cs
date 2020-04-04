@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Linq;
+using System.Threading.Tasks;
 using COVIDsStat.Connectivity.Api;
 using COVIDsStat.Models;
 using ReactiveUI;
@@ -39,16 +42,33 @@ namespace COVIDsStat.ViewModels
         private async void LoadData()
         {
             SetNavigationPageTitle("Countries");
-
             IsBusy = true;
-
+           
+            Countries = new ObservableCollection<CountryStat>();
+            
             var _data = await _apiService.COVIDApi.GetCountriesStatisticsAsync();
 
-            Countries = new ObservableCollection<CountryStat>(_data.OrderBy(x=>x.Country));
+            await UpdateCountryListAsync(_data.Skip(1));
 
             IsBusy = false;
-
         }
 
+        private async Task UpdateCountryListAsync(IEnumerable<CountryStat> countryStat)
+        {
+            foreach (var item in countryStat)
+            {
+                try
+                {
+                    var result = await _apiService.CountryApi.GetCountryInfoAsync(item.Country);
+                    item.CountryInfo = result.FirstOrDefault();
+                    Countries.Add(item);
+
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"---------- Error with the country: {item.Country}");
+                }
+            }
+        }
     }
 }
