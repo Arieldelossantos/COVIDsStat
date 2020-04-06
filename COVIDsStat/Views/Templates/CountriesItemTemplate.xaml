@@ -14,20 +14,19 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <ffimageloadingsvg:SvgCachedImage Aspect="AspectFill" Grid.RowSpan="2"
-                                                WidthRequest="110" HeightRequest="65"
-			                                    DownsampleToViewSize="true" Source="{Binding Flag}"/>
+            <ffimageloadingsvg:SvgCachedImage Aspect="Fill" Grid.RowSpan="2"
+                                              WidthRequest="110" HeightRequest="65" Source="{Binding Flag}"/>
 		                
-            <Label Grid.Column="1" Grid.ColumnSpan="2"
-                    Text="{Binding Country}" FontAttributes="Bold"
+            <Label Grid.Column="1" Grid.ColumnSpan="2" VerticalOptions="CenterAndExpand"
+                    Text="{Binding StrCountry}" FontAttributes="Bold"
                     TextColor="#363636" FontSize="Large"/>
 
             <Label Grid.Row="1" Grid.Column="1"
-                    VerticalOptions="CenterAndExpand"
+                    VerticalOptions="StartAndExpand" 
                     Text="Total Cases: " TextColor="DarkGray"
                     FontAttributes="Bold" FontSize="Large"/>
             <Label Grid.Row="1" Grid.Column="2"
-                    VerticalOptions="CenterAndExpand" TextColor="Gray"
+                    VerticalOptions="StartAndExpand" TextColor="Gray"
                     Text="{Binding TotalCases}" FontSize="Large"/>
         </Grid>
     </ContentView.Content>

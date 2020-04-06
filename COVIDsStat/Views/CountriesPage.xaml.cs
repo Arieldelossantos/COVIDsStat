@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using COVIDsStat.ViewModels;
 using ReactiveUI;
 using ReactiveUI.XamForms;
@@ -17,10 +18,25 @@ namespace COVIDsStat.Views
             this.WhenActivated(
                 disposables =>
                 {
+                    this.Bind(this.ViewModel,
+                                   vm => vm.ItemTreshold,
+                                   v => v.countriesList.RemainingItemsThreshold)
+                    .DisposeWith(disposables); 
+
                     this.OneWayBind(this.ViewModel,
                                   vm => vm.IsBusy,
                                   v => v.countriespage.IsBusy)
                     .DisposeWith(disposables);
+
+                    this.OneWayBind(this.ViewModel,
+                                 vm => vm.LoadingMore,
+                                 v => v.loadingmore.IsVisible)
+                   .DisposeWith(disposables);
+
+                    this.OneWayBind(this.ViewModel,
+                                 vm => vm.LoadingMore,
+                                 v => v.loadingmore.IsRunning)
+                   .DisposeWith(disposables);
 
                     this.Bind(this.ViewModel,
                                    vm => vm.IsBusy,
@@ -46,12 +62,15 @@ namespace COVIDsStat.Views
                                     vm => vm.SelectedCountry,
                                     v => v.countriesList.SelectedItem)
                     .DisposeWith(disposables);
+
+                    
+
                 });
         }
         protected override void OnDisappearing()
         {
             base.OnDisappearing();
-            ViewModel.SelectedCountry = null;           
+            ViewModel.SelectedCountry = null;
         }
     }
 }

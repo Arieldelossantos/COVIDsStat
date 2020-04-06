@@ -7,14 +7,14 @@
              x:Class="COVIDsStat.Views.Templates.CountryInfoTemplate">
     <ContentView.Content>
         <StackLayout Spacing="10" Padding="5,20,5,0" >
-            <ffimageloadingsvg:SvgCachedImage Aspect="AspectFill" 
-                                              WidthRequest="150" HeightRequest="90"
+            <ffimageloadingsvg:SvgCachedImage Aspect="Fill" 
+                                              WidthRequest="170" HeightRequest="110"
                                               HorizontalOptions="CenterAndExpand"
 			                                  DownsampleToViewSize="true"
                                               Source="{Binding Country.Flag}"/>
             <Label HorizontalTextAlignment="Center" Margin="5,0,5,10"  FontSize="45"
                    FontAttributes="Bold" TextColor="#3d3d3d"
-                   Text="{Binding Country.Country}"/>
+                   Text="{Binding Country.StrCountry}"/>
             <Grid Padding="20" ColumnSpacing="15" RowSpacing="15">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
