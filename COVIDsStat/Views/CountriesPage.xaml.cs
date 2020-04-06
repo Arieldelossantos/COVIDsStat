@@ -13,6 +13,7 @@ namespace COVIDsStat.Views
         public CountriesPage()
         {
             InitializeComponent();
+
             this.WhenActivated(
                 disposables =>
                 {
@@ -21,9 +22,14 @@ namespace COVIDsStat.Views
                                   v => v.countriespage.IsBusy)
                     .DisposeWith(disposables);
 
-                    this.OneWayBind(this.ViewModel,
+                    this.Bind(this.ViewModel,
                                    vm => vm.IsBusy,
-                                   v => v.countriesList.IsRefreshing)
+                                   v => v.activityIndicator.IsVisible)
+                    .DisposeWith(disposables);
+
+                    this.Bind(this.ViewModel,
+                                   vm => vm.IsBusy,
+                                   v => v.activityIndicator.IsRunning)
                     .DisposeWith(disposables);
 
                     this.OneWayBind(this.ViewModel,
@@ -40,16 +46,12 @@ namespace COVIDsStat.Views
                                     vm => vm.SelectedCountry,
                                     v => v.countriesList.SelectedItem)
                     .DisposeWith(disposables);
-
                 });
         }
-
-        void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
+        protected override void OnDisappearing()
         {
-            // This is to avoid the orange on selected background color on android
-            if (e.SelectedItem == null) return;
-
-            ((ListView)sender).SelectedItem = null;
+            base.OnDisappearing();
+            ViewModel.SelectedCountry = null;           
         }
     }
 }

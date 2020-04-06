@@ -34,5 +34,6 @@
     <Folder Include="Views\" />
     <Folder Include="ViewModels\" />
     <Folder Include="Controls\" />
+    <Folder Include="Views\Templates\" />
   </ItemGroup>
 </Project>

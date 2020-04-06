@@ -11,7 +11,13 @@ namespace COVIDsStat
         {
             InitializeComponent();
 
-           
+            SetExperimentalFlags();
+        }
+
+        private void SetExperimentalFlags()
+        {
+            Xamarin.Forms.Device.SetFlags(new[] {
+                "CollectionView_Experimental"});
         }
 
         protected override void OnStart()

@@ -20,12 +20,15 @@ namespace COVIDsStat.ViewModels
         public CountryStat SelectedCountry { get; set; }
 
         [Reactive]
-        public ObservableCollection<CountryStat> Countries { get; set; } 
+        public ObservableCollection<CountryStat> Countries { get; set; }
+
+        [Reactive]
+        public IEnumerable<CountryStat> _data { get; set; }
 
         public CountriesViewModel(IApiService apiService)
         {
             _apiService = apiService;
-
+            _data = new List<CountryStat>();
             RegisterEvents();
             LoadData();
         }
@@ -43,12 +46,12 @@ namespace COVIDsStat.ViewModels
         {
             SetNavigationPageTitle("Countries");
             IsBusy = true;
-           
-            Countries = new ObservableCollection<CountryStat>();
-            
-            var _data = await _apiService.COVIDApi.GetCountriesStatisticsAsync();
 
-            await UpdateCountryListAsync(_data.Skip(1));
+            Countries = new ObservableCollection<CountryStat>();
+
+            _data = await _apiService.COVIDApi.GetCountriesStatisticsAsync();
+
+            await UpdateCountryListAsync(_data.Skip(1));            
 
             IsBusy = false;
         }
