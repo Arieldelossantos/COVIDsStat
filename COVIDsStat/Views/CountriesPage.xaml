@@ -9,18 +9,18 @@
                           Visual="Material"
                           BackgroundColor="#F2F2F2"
                           x:Name="countriespage">
-    <Grid Padding="0,5">        
+    <Grid Padding="0,5">
         <CollectionView x:Name="countriesList"
                         RemainingItemsThresholdReachedCommand="{Binding ItemTresholdReachedCommand}"
                         SelectionMode="Single"
-                        BackgroundColor="Transparent">        
+                        BackgroundColor="Transparent">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <view:CountriesItemTemplate/>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-       <ActivityIndicator x:Name="activityIndicator" VerticalOptions="Start"
+        <ActivityIndicator x:Name="activityIndicator" VerticalOptions="Start"
                            HeightRequest="35" Margin="0,20,0,0" HorizontalOptions="Center"/>
         <ActivityIndicator x:Name="loadingmore" VerticalOptions="End"
                            HeightRequest="35" Margin="0,0,0,10" HorizontalOptions="Center"/>

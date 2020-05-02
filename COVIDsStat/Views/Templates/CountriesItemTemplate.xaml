@@ -11,23 +11,18 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <ffimageloadingsvg:SvgCachedImage Aspect="Fill" Grid.RowSpan="2"
-                                              WidthRequest="110" HeightRequest="65" Source="{Binding Flag}"/>
+            <ffimageloadingsvg:SvgCachedImage Aspect="AspectFill" Grid.RowSpan="2"
+                                              WidthRequest="100" HeightRequest="60" Source="{Binding Flag}"/>
 		                
-            <Label Grid.Column="1" Grid.ColumnSpan="2" VerticalOptions="CenterAndExpand"
+            <Label Grid.Column="1" VerticalOptions="CenterAndExpand"
                     Text="{Binding StrCountry}" FontAttributes="Bold"
                     TextColor="#363636" FontSize="Large"/>
 
             <Label Grid.Row="1" Grid.Column="1"
-                    VerticalOptions="StartAndExpand" 
-                    Text="Total Cases: " TextColor="DarkGray"
-                    FontAttributes="Bold" FontSize="Large"/>
-            <Label Grid.Row="1" Grid.Column="2"
                     VerticalOptions="StartAndExpand" TextColor="Gray"
-                    Text="{Binding TotalCases}" FontSize="Large"/>
+                    Text="{Binding TotalCases,StringFormat='Total cases: {0:N}'}" FontSize="Medium"/>
         </Grid>
     </ContentView.Content>
 </ContentView>

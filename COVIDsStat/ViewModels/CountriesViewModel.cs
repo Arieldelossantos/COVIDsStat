@@ -39,7 +39,10 @@ namespace COVIDsStat.ViewModels
         public CountriesViewModel(IApiService apiService)
         {
             _apiService = apiService;
-          
+
+            Countries = new ObservableCollection<CountryStat>();
+            Xamarin.Forms.BindingBase.EnableCollectionSynchronization(Countries, null, ObservableCollectionCallback);
+
             RegisterEvents();
             LoadData();
         }
@@ -51,8 +54,8 @@ namespace COVIDsStat.ViewModels
             ItemTresholdReachedCommand.Subscribe();
 
             this.WhenAnyValue(x => x.ItemTreshold)
-                .Where(x => x>0)
-                .Subscribe(_=> ItemTresholdReachedCommand.Execute());
+                .Where(x => x > 0)
+                .Subscribe(_ => ItemTresholdReachedCommand.Execute());
 
             this.WhenAnyValue(x => x.SelectedCountry)
                 .Where(x => x != null)
@@ -66,8 +69,6 @@ namespace COVIDsStat.ViewModels
             SetNavigationPageTitle("Countries");
             ItemTreshold = 1;
             _countryData = new List<CountryStat>();
-
-            Countries = new ObservableCollection<CountryStat>();
 
             IsBusy = true;
 
@@ -92,7 +93,7 @@ namespace COVIDsStat.ViewModels
                 var items = await GetCountryDataAsync(Countries.Count);
 
                 await UpdateWithFlagCountryListAsync(items);
-                
+
                 if (items.Count() == 0)
                 {
                     ItemTreshold = -1;
@@ -130,11 +131,19 @@ namespace COVIDsStat.ViewModels
             }
         }
 
-
         public async Task<IEnumerable<CountryStat>> GetCountryDataAsync(int lastIndex = 0)
         {
-            int numberOfItemsPerPage = 15;
+            int numberOfItemsPerPage = 20;
             return await Task.FromResult(_countryData.Skip(lastIndex).Take(numberOfItemsPerPage));
+        }
+
+        private void ObservableCollectionCallback(IEnumerable collection, object context, Action accessMethod, bool writeAccess)
+        {
+            // `lock` ensures that only one thread access the collection at a time
+            lock (collection)
+            {
+                accessMethod?.Invoke();
+            }
         }
     }
 }
