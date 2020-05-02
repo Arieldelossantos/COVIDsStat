@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reactive.Disposables;
+using System.Reactive.Linq;
 using COVIDsStat.ViewModels;
 using ReactiveUI;
 using ReactiveUI.XamForms;
@@ -13,17 +14,38 @@ namespace COVIDsStat.Views
         public CountriesPage()
         {
             InitializeComponent();
+
             this.WhenActivated(
                 disposables =>
                 {
+                    this.Bind(this.ViewModel,
+                                   vm => vm.ItemTreshold,
+                                   v => v.countriesList.RemainingItemsThreshold)
+                    .DisposeWith(disposables); 
+
                     this.OneWayBind(this.ViewModel,
                                   vm => vm.IsBusy,
                                   v => v.countriespage.IsBusy)
                     .DisposeWith(disposables);
 
                     this.OneWayBind(this.ViewModel,
+                                 vm => vm.LoadingMore,
+                                 v => v.loadingmore.IsVisible)
+                   .DisposeWith(disposables);
+
+                    this.OneWayBind(this.ViewModel,
+                                 vm => vm.LoadingMore,
+                                 v => v.loadingmore.IsRunning)
+                   .DisposeWith(disposables);
+
+                    this.Bind(this.ViewModel,
                                    vm => vm.IsBusy,
-                                   v => v.countriesList.IsRefreshing)
+                                   v => v.activityIndicator.IsVisible)
+                    .DisposeWith(disposables);
+
+                    this.Bind(this.ViewModel,
+                                   vm => vm.IsBusy,
+                                   v => v.activityIndicator.IsRunning)
                     .DisposeWith(disposables);
 
                     this.OneWayBind(this.ViewModel,
@@ -41,15 +63,14 @@ namespace COVIDsStat.Views
                                     v => v.countriesList.SelectedItem)
                     .DisposeWith(disposables);
 
+                    
+
                 });
         }
-
-        void Handle_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
+        protected override void OnDisappearing()
         {
-            // This is to avoid the orange on selected background color on android
-            if (e.SelectedItem == null) return;
-
-            ((ListView)sender).SelectedItem = null;
+            base.OnDisappearing();
+            ViewModel.SelectedCountry = null;
         }
     }
 }

@@ -20,7 +20,7 @@ namespace COVIDsStat.Models
         public string TotCasesx1Mpop { get; set; }
         public CountryInfo CountryInfo { get; set; }
 
-        public string Flag => CountryInfo?.flag;
-
+        public string Flag => string.IsNullOrEmpty(CountryInfo?.flag) ? "placeholder" : CountryInfo?.flag;
+        public string StrCountry => Country.Replace("\n", "");
     }
 }

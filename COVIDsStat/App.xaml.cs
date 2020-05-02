@@ -10,8 +10,6 @@ namespace COVIDsStat
         public App()
         {
             InitializeComponent();
-
-           
         }
 
         protected override void OnStart()

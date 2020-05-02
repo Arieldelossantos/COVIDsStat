@@ -5,55 +5,11 @@
                           x:TypeArguments="vm:CountryViewModel"
                           xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
                           xmlns:vm="clr-namespace:COVIDsStat.ViewModels"
-                          xmlns:cs="clr-namespace:COVIDsStat.Controls"
-                          xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+                          xmlns:view="clr-namespace:COVIDsStat.Views.Templates"
                           Visual="Material"
                           BackgroundColor="#F2F2F2"
                           x:Name="countrypage">
     <ScrollView>
-        <StackLayout Spacing="10" Padding="5,20,5,0" >
-            <ffimageloadingsvg:SvgCachedImage Aspect="AspectFill" 
-                                              WidthRequest="150" HeightRequest="90"
-                                              HorizontalOptions="CenterAndExpand"
-			                                  DownsampleToViewSize="true"
-                                              Source="{Binding Country.Flag}"/>
-            <Label HorizontalTextAlignment="Center" Margin="5,0,5,10"  FontSize="45"
-                   FontAttributes="Bold" TextColor="#3d3d3d"
-                   Text="{Binding Country.Country}"/>
-            <Grid Padding="20" ColumnSpacing="15" RowSpacing="15">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <cs:CountryStatCard TitleStatName="Total Cases" StatValue="{Binding Country.TotalCases}"
-                                    Grid.Row="0" Grid.Column="0" />
-                <cs:CountryStatCard TitleStatName="New Cases" StatValue="{Binding Country.NewCases}"
-                                    Grid.Row="0" Grid.Column="1" />
-
-                <cs:CountryStatCard TitleStatName="Total Deaths" StatValue="{Binding Country.TotalDeaths}"
-                                    Grid.Row="1" Grid.Column="0"/>
-                <cs:CountryStatCard TitleStatName="New Deaths" StatValue="{Binding Country.NewDeaths}"
-                                    Grid.Row="1" Grid.Column="1" />
-
-                <cs:CountryStatCard TitleStatName="Recovered" StatValue="{Binding Country.TotalRecovered}"
-                                    Grid.Row="2" Grid.Column="0"/>
-                <cs:CountryStatCard TitleStatName="Active Cases" StatValue="{Binding Country.ActiveCases}"
-                                    Grid.Row="2" Grid.Column="1" />
-
-                <cs:CountryStatCard TitleStatName="Serious Critical"
-                                    HorizontalOptions="CenterAndExpand"
-                                    StatValue="{Binding Country.SeriousCritical}"
-                                    Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"/>
-                
-            </Grid>
-        </StackLayout>
+        <view:CountryInfoTemplate/>
     </ScrollView>
 </rxui:ReactiveContentPage>

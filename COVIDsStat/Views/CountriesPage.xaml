@@ -5,46 +5,24 @@
                           x:TypeArguments="vm:CountriesViewModel"
                           xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
                           xmlns:vm="clr-namespace:COVIDsStat.ViewModels"
-                          xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-                          xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+                          xmlns:view="clr-namespace:COVIDsStat.Views.Templates"
                           Visual="Material"
-                           BackgroundColor="#F2F2F2"
+                          BackgroundColor="#F2F2F2"
                           x:Name="countriespage">
-    <ListView x:Name="countriesList" BackgroundColor="Transparent"
-              ItemSelected="Handle_ItemSelected"
-              HasUnevenRows="True">
-        <ListView.ItemTemplate>
-            <DataTemplate>
-                <ViewCell>
-                    <Grid Padding="10,8" ColumnSpacing="5">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <ffimageloadingsvg:SvgCachedImage Aspect="AspectFill" Grid.RowSpan="2"
-                                                          WidthRequest="110" HeightRequest="65"
-			                                              DownsampleToViewSize="true" Source="{Binding Flag}"/>
-		                
-                        <Label Grid.Column="1" Grid.ColumnSpan="2"
-                               Text="{Binding Country}" FontAttributes="Bold"
-                               TextColor="#363636" FontSize="Large"/>
-
-                        <Label Grid.Row="1" Grid.Column="1"
-                               VerticalOptions="CenterAndExpand"
-                               Text="Total Cases: " TextColor="DarkGray"
-                               FontAttributes="Bold" FontSize="Large"/>
-                        <Label Grid.Row="1" Grid.Column="2"
-                               VerticalOptions="CenterAndExpand" TextColor="Gray"
-                               Text="{Binding TotalCases}" FontSize="Large"/>
-                    </Grid>
-                </ViewCell>
-            </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>
-   
+    <Grid Padding="0,5">
+        <CollectionView x:Name="countriesList"
+                        RemainingItemsThresholdReachedCommand="{Binding ItemTresholdReachedCommand}"
+                        SelectionMode="Single"
+                        BackgroundColor="Transparent">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <view:CountriesItemTemplate/>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <ActivityIndicator x:Name="activityIndicator" VerticalOptions="Start"
+                           HeightRequest="35" Margin="0,20,0,0" HorizontalOptions="Center"/>
+        <ActivityIndicator x:Name="loadingmore" VerticalOptions="End"
+                           HeightRequest="35" Margin="0,0,0,10" HorizontalOptions="Center"/>
+    </Grid>
 </rxui:ReactiveContentPage>

@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using COVIDsStat.Connectivity.Api;
 using COVIDsStat.Models;
 using ReactiveUI;
@@ -12,19 +15,33 @@ using ReactiveUI.Fody.Helpers;
 
 namespace COVIDsStat.ViewModels
 {
-    public class CountriesViewModel: BaseViewModel
+    public class CountriesViewModel : BaseViewModel
     {
-        private readonly IApiService _apiService;
-
         [Reactive]
         public CountryStat SelectedCountry { get; set; }
 
         [Reactive]
-        public ObservableCollection<CountryStat> Countries { get; set; } 
+        public ObservableCollection<CountryStat> Countries { get; set; }
+
+        [Reactive]
+        public int ItemTreshold { get; set; }
+
+        [Reactive]
+        public bool LoadingMore { get; set; }
+
+        [Reactive]
+        public ReactiveCommand<Unit, Unit> ItemTresholdReachedCommand { get; set; }
+
+        private readonly IApiService _apiService;
+        private IEnumerable<CountryStat> _countryData;
+        private IEnumerable<CountryStat> _temp;
 
         public CountriesViewModel(IApiService apiService)
         {
             _apiService = apiService;
+
+            Countries = new ObservableCollection<CountryStat>();
+            Xamarin.Forms.BindingBase.EnableCollectionSynchronization(Countries, null, ObservableCollectionCallback);
 
             RegisterEvents();
             LoadData();
@@ -32,6 +49,14 @@ namespace COVIDsStat.ViewModels
 
         private void RegisterEvents()
         {
+            ItemTresholdReachedCommand = ReactiveCommand.CreateFromTask(ItemsTresholdReached);
+
+            ItemTresholdReachedCommand.Subscribe();
+
+            this.WhenAnyValue(x => x.ItemTreshold)
+                .Where(x => x > 0)
+                .Subscribe(_ => ItemTresholdReachedCommand.Execute());
+
             this.WhenAnyValue(x => x.SelectedCountry)
                 .Where(x => x != null)
                 .Subscribe(NavigateToCountryPage);
@@ -42,18 +67,50 @@ namespace COVIDsStat.ViewModels
         private async void LoadData()
         {
             SetNavigationPageTitle("Countries");
-            IsBusy = true;
-           
-            Countries = new ObservableCollection<CountryStat>();
-            
-            var _data = await _apiService.COVIDApi.GetCountriesStatisticsAsync();
+            ItemTreshold = 1;
+            _countryData = new List<CountryStat>();
 
-            await UpdateCountryListAsync(_data.Skip(1));
+            IsBusy = true;
+
+            _countryData = await _apiService.COVIDApi.GetCountriesStatisticsAsync();
+
+            _temp = await GetCountryDataAsync();
+
+            await UpdateWithFlagCountryListAsync(_temp);
 
             IsBusy = false;
         }
 
-        private async Task UpdateCountryListAsync(IEnumerable<CountryStat> countryStat)
+        private async Task ItemsTresholdReached()
+        {
+            if (IsBusy)
+                return;
+
+            LoadingMore = true;
+
+            try
+            {
+                var items = await GetCountryDataAsync(Countries.Count);
+
+                await UpdateWithFlagCountryListAsync(items);
+
+                if (items.Count() == 0)
+                {
+                    ItemTreshold = -1;
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            finally
+            {
+                LoadingMore = false;
+            }
+        }
+
+        private async Task UpdateWithFlagCountryListAsync(IEnumerable<CountryStat> countryStat)
         {
             foreach (var item in countryStat)
             {
@@ -61,13 +118,31 @@ namespace COVIDsStat.ViewModels
                 {
                     var result = await _apiService.CountryApi.GetCountryInfoAsync(item.Country);
                     item.CountryInfo = result.FirstOrDefault();
-                    Countries.Add(item);
-
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine($"---------- Error with the country: {item.Country}");
+                    Debug.WriteLine($"---------- Error with the country: {item.StrCountry}");
                 }
+                finally
+                {
+                    if (!string.IsNullOrEmpty(item.StrCountry))
+                        Countries.Add(item);
+                }
+            }
+        }
+
+        public async Task<IEnumerable<CountryStat>> GetCountryDataAsync(int lastIndex = 0)
+        {
+            int numberOfItemsPerPage = 20;
+            return await Task.FromResult(_countryData.Skip(lastIndex).Take(numberOfItemsPerPage));
+        }
+
+        private void ObservableCollectionCallback(IEnumerable collection, object context, Action accessMethod, bool writeAccess)
+        {
+            // `lock` ensures that only one thread access the collection at a time
+            lock (collection)
+            {
+                accessMethod?.Invoke();
             }
         }
     }
