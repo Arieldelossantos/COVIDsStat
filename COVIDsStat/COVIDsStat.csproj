@@ -35,5 +35,6 @@
     <Folder Include="ViewModels\" />
     <Folder Include="Controls\" />
     <Folder Include="Views\Templates\" />
+    <Folder Include="Helpers\Converters\" />
   </ItemGroup>
 </Project>

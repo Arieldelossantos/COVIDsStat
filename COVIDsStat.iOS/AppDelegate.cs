@@ -25,6 +25,7 @@ namespace COVIDsStat.iOS
         {
             global::Xamarin.Forms.Forms.Init();
             Xamarin.Forms.FormsMaterial.Init();
+
             CachedImageRenderer.Init();
             CachedImageRenderer.InitImageSourceHandler();
             LoadApplication(new App());

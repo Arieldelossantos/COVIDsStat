@@ -18,10 +18,7 @@ namespace COVIDsStat.Views
             this.WhenActivated(
                 disposables =>
                 {
-                    this.Bind(this.ViewModel,
-                                   vm => vm.ItemTreshold,
-                                   v => v.countriesList.RemainingItemsThreshold)
-                    .DisposeWith(disposables); 
+                   
 
                     this.OneWayBind(this.ViewModel,
                                   vm => vm.IsBusy,

@@ -35,7 +35,7 @@ namespace COVIDsStat.ViewModels
         private readonly IApiService _apiService;
         private IEnumerable<CountryStat> _countryData;
         private IEnumerable<CountryStat> _temp;
-
+        private int LoadLimit;
         public CountriesViewModel(IApiService apiService)
         {
             _apiService = apiService;
@@ -68,6 +68,7 @@ namespace COVIDsStat.ViewModels
         {
             SetNavigationPageTitle("Countries");
             ItemTreshold = 1;
+            LoadLimit = 20;
             _countryData = new List<CountryStat>();
 
             IsBusy = true;
@@ -90,11 +91,14 @@ namespace COVIDsStat.ViewModels
 
             try
             {
-                var items = await GetCountryDataAsync(Countries.Count);
+                var nextIndex = Countries.Count+1;
+                var items = await GetCountryDataAsync(nextIndex);
 
                 await UpdateWithFlagCountryListAsync(items);
+                var listItemsCount = items.Count();
 
-                if (items.Count() == 0)
+                
+                if (listItemsCount < LoadLimit)
                 {
                     ItemTreshold = -1;
                     return;
@@ -133,8 +137,7 @@ namespace COVIDsStat.ViewModels
 
         public async Task<IEnumerable<CountryStat>> GetCountryDataAsync(int lastIndex = 0)
         {
-            int numberOfItemsPerPage = 20;
-            return await Task.FromResult(_countryData.Skip(lastIndex).Take(numberOfItemsPerPage));
+            return await Task.FromResult(_countryData.Skip(lastIndex).Take(LoadLimit));
         }
 
         private void ObservableCollectionCallback(IEnumerable collection, object context, Action accessMethod, bool writeAccess)

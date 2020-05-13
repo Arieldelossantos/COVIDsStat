@@ -41,7 +41,14 @@ namespace COVIDsStat.Controls
         {
             var control = (CountryStatCard)bindable;
 
-            control.info.Text = (!string.IsNullOrEmpty((string)newValue))? (string)newValue : "0";
+            int statValue = 0;
+
+            if(!string.IsNullOrEmpty((string)newValue))
+            {
+                statValue = int.Parse((string)newValue);
+            }
+
+            control.info.Text = statValue.ToString("N0");
         }
     }
 }

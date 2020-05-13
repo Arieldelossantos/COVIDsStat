@@ -11,9 +11,15 @@
                           x:Name="countriespage">
     <Grid Padding="0,5">
         <CollectionView x:Name="countriesList"
+                        RemainingItemsThreshold="{Binding ItemTreshold}"
                         RemainingItemsThresholdReachedCommand="{Binding ItemTresholdReachedCommand}"
                         SelectionMode="Single"
+                        ItemSizingStrategy="MeasureAllItems"
                         BackgroundColor="Transparent">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Vertical"                                   
+                                   ItemSpacing="10"/>
+            </CollectionView.ItemsLayout>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <view:CountriesItemTemplate/>

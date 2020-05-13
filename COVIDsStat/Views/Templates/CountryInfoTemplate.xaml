@@ -1,21 +1,15 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
-              Visual="Material"
+             Visual="Material"
              xmlns:cs="clr-namespace:COVIDsStat.Controls"
              x:Class="COVIDsStat.Views.Templates.CountryInfoTemplate">
     <ContentView.Content>
-        <StackLayout Spacing="10" Padding="5,20,5,0" >
-            <ffimageloadingsvg:SvgCachedImage Aspect="Fill" 
-                                              WidthRequest="170" HeightRequest="110"
-                                              HorizontalOptions="CenterAndExpand"
-			                                  DownsampleToViewSize="true"
-                                              Source="{Binding Country.Flag}"/>
-            <Label HorizontalTextAlignment="Center" Margin="5,0,5,10"  FontSize="45"
-                   FontAttributes="Bold" TextColor="#3d3d3d"
+        <StackLayout Spacing="0">
+            <Label HorizontalTextAlignment="Center" Margin="10,0,10,10" LineBreakMode="WordWrap" FontSize="45"
+                   FontAttributes="Bold" TextColor="#3b3b3b"
                    Text="{Binding Country.StrCountry}"/>
-            <Grid Padding="20" ColumnSpacing="15" RowSpacing="15">
+            <Grid Padding="15,0" ColumnSpacing="15" RowSpacing="15">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -45,7 +39,7 @@
                 <cs:CountryStatCard TitleStatName="Serious Critical"
                                     HorizontalOptions="CenterAndExpand"
                                     StatValue="{Binding Country.SeriousCritical}"
-                                    Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"/>                
+                                    Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"/>
             </Grid>
         </StackLayout>
     </ContentView.Content>
