@@ -2,27 +2,62 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
-             x:Class="COVIDsStat.Views.Templates.CountriesItemTemplate">
+             xmlns:conv="clr-namespace:COVIDsStat.Helpers.Converters"
+             xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             x:Class="COVIDsStat.Views.Templates.CountriesItemTemplate"
+             Padding="10,0">
+    <ContentView.Resources>
+        <conv:StringToNumberConverter x:Key="StringToNumberConverter"/>
+    </ContentView.Resources>
     <ContentView.Content>
-        <Grid Padding="10,8" ColumnSpacing="5">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <ffimageloadingsvg:SvgCachedImage Aspect="AspectFill" Grid.RowSpan="2"
-                                              WidthRequest="100" HeightRequest="60" Source="{Binding Flag}"/>
-		                
-            <Label Grid.Column="1" VerticalOptions="CenterAndExpand"
-                    Text="{Binding StrCountry}" FontAttributes="Bold"
-                    TextColor="#363636" FontSize="Large"/>
+        <pv:PancakeView CornerRadius="10" Margin="5"
+                        HasShadow="{OnPlatform iOS='False',Android='True'}"
+                        Elevation="4"
+                        BackgroundColor="#E6E6E6">
+            <Grid Padding="10" ColumnSpacing="10">
 
-            <Label Grid.Row="1" Grid.Column="1"
-                    VerticalOptions="StartAndExpand" TextColor="Gray"
-                    Text="{Binding TotalCases,StringFormat='Total cases: {0:N}'}" FontSize="Medium"/>
-        </Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <pv:PancakeView Grid.Column="0" 
+                            CornerRadius="45"
+                            HasShadow="False"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center"
+                            HeightRequest="90" WidthRequest="90">
+
+                    <ffimageloadingsvg:SvgCachedImage Aspect="AspectFill"
+                                                  HeightRequest="110"
+                                                  WidthRequest="110"
+                                                  Source="{Binding Flag}"/>
+                </pv:PancakeView>
+
+                <Grid Grid.Column="1" VerticalOptions="CenterAndExpand">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" 
+                            Text="{Binding StrCountry}" FontAttributes="Bold"
+                            HorizontalTextAlignment="Start"
+                            LineBreakMode="WordWrap"
+                            TextColor="#3b3b3b" FontSize="Large"/>
+
+                    <Label Grid.Row="1"  TextColor="Gray"
+                           FontSize="Medium"
+                           HorizontalTextAlignment="Start">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Cases: " FontAttributes="Bold" />
+                                <Span Text="{Binding TotalCases,Converter={StaticResource StringToNumberConverter}}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </Grid>
+
+            </Grid>
+        </pv:PancakeView>
     </ContentView.Content>
 </ContentView>

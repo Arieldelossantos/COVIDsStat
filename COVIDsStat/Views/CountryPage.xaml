@@ -6,10 +6,39 @@
                           xmlns:rxui="clr-namespace:ReactiveUI.XamForms;assembly=ReactiveUI.XamForms"
                           xmlns:vm="clr-namespace:COVIDsStat.ViewModels"
                           xmlns:view="clr-namespace:COVIDsStat.Views.Templates"
+                          xmlns:ffimageloadingsvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+                          xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
                           Visual="Material"
-                          BackgroundColor="#F2F2F2"
+                          BackgroundColor="#ededed"
                           x:Name="countrypage">
-    <ScrollView>
-        <view:CountryInfoTemplate/>
-    </ScrollView>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="6*"/>
+        </Grid.RowDefinitions>
+
+        <ffimageloadingsvg:SvgCachedImage Aspect="AspectFill" 
+			                              DownsampleToViewSize="true"
+                                          Source="{Binding Country.Flag}"/>
+
+        <ScrollView  Grid.RowSpan="2"   VerticalScrollBarVisibility="Never">
+            <Grid Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2.5*"/>
+                    <RowDefinition Height="7.5*"/>
+                </Grid.RowDefinitions>
+                <pv:PancakeView Grid.Row="1"                  
+                                Margin="7,0"
+                                CornerRadius="40,40,0,0"
+                                HasShadow="False"
+                                BackgroundColor="#ededed">
+
+                    <view:CountryInfoTemplate  />
+
+                </pv:PancakeView>
+            </Grid>
+        </ScrollView>
+    </Grid>
+
 </rxui:ReactiveContentPage>
