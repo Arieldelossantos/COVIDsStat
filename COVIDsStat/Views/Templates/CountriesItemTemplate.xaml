@@ -29,6 +29,7 @@
                             HeightRequest="90" WidthRequest="90">
 
                     <ffimageloadingsvg:SvgCachedImage Aspect="AspectFill"
+                                                      LoadingPlaceholder="placeholder"
                                                   HeightRequest="110"
                                                   WidthRequest="110"
                                                   Source="{Binding Flag}"/>

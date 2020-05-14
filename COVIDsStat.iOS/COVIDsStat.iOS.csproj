@@ -168,5 +168,6 @@
     <BundleResource Include="Resources\placeholder.gif" />
     <BundleResource Include="Resources\placeholder%402x.gif" />
     <BundleResource Include="Resources\placeholder%403x.gif" />
+    <BundleResource Include="Resources\splash.png" />
   </ItemGroup>
 </Project>
