@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Padding="0"
+             xmlns:pv="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             x:Class="COVIDsStat.Controls.CountryStatCard">
+
+    <pv:PancakeView CornerRadius="10" HasShadow="True"
+                    Elevation="3"
+                   Margin="10,5"
+                   BackgroundColor="#E6E6E6">
+        <Grid RowSpacing="0" Padding="5,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="7.5*"/>
+                <RowDefinition Height="2.5*"/>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="0" x:Name="info" TextColor="#60000000"
+                  FontSize="Title" VerticalOptions="Center"
+                  HorizontalTextAlignment="Center"/>
+            <Label Grid.Row="1" x:Name="title" TextColor="#6F6F6F"
+                   VerticalOptions="Start" LineBreakMode="NoWrap"
+                   Padding="5,0"
+                  FontSize="Small" FontAttributes="Bold"
+                  HorizontalTextAlignment="Center"/>
+        </Grid>
+    </pv:PancakeView>
+</ContentView>
