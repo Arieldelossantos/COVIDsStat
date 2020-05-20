@@ -15,14 +15,14 @@ namespace COVIDsStat.Controls
         public static readonly BindableProperty TitleStatProperty =
             BindableProperty.Create("TitleStatName", typeof(string), typeof(CountryStatCard), string.Empty, propertyChanged: OnTitleStatNameChanged);
 
-        public string StatValue
+        public int StatValue
         {
-            get { return (string)GetValue(StatValueProperty); }
+            get { return (int)GetValue(StatValueProperty); }
             set { SetValue(StatValueProperty, value); }
         }
 
         public static readonly BindableProperty StatValueProperty =
-            BindableProperty.Create("StatValue", typeof(string), typeof(CountryStatCard), "0", propertyChanged: OnStatValueChanged);
+            BindableProperty.Create("StatValue", typeof(int), typeof(CountryStatCard), -1, propertyChanged: OnStatValueChanged);
 
         public CountryStatCard()
         {
@@ -41,14 +41,7 @@ namespace COVIDsStat.Controls
         {
             var control = (CountryStatCard)bindable;
 
-            int statValue = 0;
-
-            if(!string.IsNullOrEmpty((string)newValue))
-            {
-                statValue = int.Parse((string)newValue);
-            }
-
-            control.info.Text = statValue.ToString("N0");
+            control.info.Text = ((int)newValue).ToString("N0");
         }
     }
 }
